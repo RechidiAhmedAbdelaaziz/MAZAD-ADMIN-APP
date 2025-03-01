@@ -1,0 +1,17 @@
+abstract class AppRoutes {
+  static const String home = 'HOME';
+
+  //* AUTH ROUTES
+  static const String login = 'LOGIN';
+  static const String signup = 'SIGNUP';
+  static const String forgetPassword = 'FORGET_PASSWORD';
+  static const String resetPassword = 'RESET_PASSWORD';
+  static const String verifyAccount = 'VERIFY_ACCOUNT';
+
+  //* AUCTION ROUTES
+  static const String auctions = 'AUCTIONS';
+  static const String auctionCreate = 'AUCTION_CREATE';
+  static const String auctionUpdate = 'AUCTION_UPDATE';
+
+
+}

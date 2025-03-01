@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazad_app/core/extension/date_formatter.extension.dart';
+import 'package:mazad_app/core/extension/dialog.extension.dart';
+import 'package:mazad_app/core/extension/localization.extension.dart';
+import 'package:mazad_app/core/extension/navigator.extension.dart';
+import 'package:mazad_app/core/shared/classes/dimensions.dart';
+import 'package:mazad_app/core/shared/widgets/pagination_builder.dart';
+import 'package:mazad_app/core/themes/colors.dart';
+import 'package:mazad_app/features/auction/config/auction_navigator.dart';
+import 'package:mazad_app/features/auction/data/models/auction_model.dart';
+
+import '../logic/auctions_cubit.dart';
+
+class AuctionsScreen extends StatelessWidget {
+  const AuctionsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final auctions = context.select(
+      (AuctionsCubit cubit) => cubit.state.auctions,
+    );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Auctions'.tr(context)),
+
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              context.toWith<AuctionModel>(
+                AuctionNavigator.createAuction(),
+                onResult: context.read<AuctionsCubit>().add,
+              );
+            },
+          ),
+        ],
+      ),
+
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 24.w,
+          vertical: 8.h,
+        ),
+        child: PaginationBuilder(
+          items: auctions,
+          itemBuilder: (auction) => _AuctionItem(auction),
+          isLoading: context.select(
+            (AuctionsCubit cubit) => cubit.state.isLoading,
+          ),
+          onLoadMore: context.read<AuctionsCubit>().load,
+          separator: heightSpace(10),
+        ),
+      ),
+    );
+  }
+}
+
+class _AuctionItem extends StatelessWidget {
+  final AuctionModel auction;
+
+  const _AuctionItem(this.auction);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      decoration: BoxDecoration(
+        color: KColors.white,
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: KColors.lightGrey),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  auction.title ?? '',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                heightSpace(8),
+                Text(
+                  '${auction.productNumber.toString()} ${'Products'.tr(context)}',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: KColors.grey,
+                  ),
+                ),
+                heightSpace(8),
+                Row(
+                  children: [
+                    Text(
+                      auction.endingDate?.toDayMonthYear() ?? '',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: KColors.grey,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${auction.price}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: KColors.dark,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'DZD',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: KColors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          PopupMenuButton(itemBuilder: _buildOptions),
+        ],
+      ),
+    );
+  }
+
+  List<PopupMenuItem<dynamic>> _buildOptions(BuildContext context) =>
+      [
+        PopupMenuItem(
+          child: Row(
+            children: [
+              Icon(Icons.edit, color: KColors.dark),
+              Text('Edit'.tr(context)),
+            ],
+          ),
+          onTap: () {
+            context.toWith<AuctionModel>(
+              AuctionNavigator.updateAuction(auction),
+              onResult: context.read<AuctionsCubit>().update,
+            );
+          },
+        ),
+
+        PopupMenuItem(
+          child: Row(
+            children: [
+              Icon(Icons.delete, color: KColors.red),
+              Text('Delete'.tr(context)),
+            ],
+          ),
+          onTap: () {
+            context.alertDialog(
+              title: 'Deleting',
+              content: 'DeleteConfirmation',
+              okText: 'Delete',
+              onConfirm: () {
+                context.read<AuctionsCubit>().remove(auction);
+              },
+            );
+          },
+        ),
+      ];
+}
+
+// 06 99 44 78 29
