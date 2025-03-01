@@ -45,7 +45,11 @@ class AuctionsScreen extends StatelessWidget {
         ),
         child: PaginationBuilder(
           items: auctions,
-          itemBuilder: (auction) => _AuctionItem(auction),
+          itemBuilder: (auction) => InkWell(
+              onTap: () {
+                //TODO Go to Auction products screen
+              },
+            child: _AuctionItem(auction)),
           isLoading: context.select(
             (AuctionsCubit cubit) => cubit.state.isLoading,
           ),

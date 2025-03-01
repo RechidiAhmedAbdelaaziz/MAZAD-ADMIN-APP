@@ -30,7 +30,6 @@ class _ImagesFieldState extends State<ImagesField> {
   void initState() {
     widget.controller.addListener(
       () => setState(() {
-        print("LENGTH: ${widget.controller.value.length}");
         // _pageController.jumpToPage(widget.controller.value.length);
       }),
     );
@@ -59,7 +58,6 @@ class _ImagesFieldState extends State<ImagesField> {
                       : null,
               onDeleted: widget.controller.removeValue,
               onPicked: (image) {
-                print("IMAGE: $image");
                 widget.controller.addValue(image);
               },
               onEdited:
