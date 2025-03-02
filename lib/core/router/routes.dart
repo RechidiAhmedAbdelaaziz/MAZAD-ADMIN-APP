@@ -13,5 +13,10 @@ abstract class AppRoutes {
   static const String auctionCreate = 'AUCTION_CREATE';
   static const String auctionUpdate = 'AUCTION_UPDATE';
 
+  //* BANNER ROUTES
+  static const String banners = 'BANNERS';
+  static const String bannerCreate = 'BANNER_CREATE';
+  static const String bannerUpdate = 'BANNER_UPDATE';
+
 
 }

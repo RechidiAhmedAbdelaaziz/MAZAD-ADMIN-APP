@@ -5,14 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazad_app/features/auction/config/auction_route.dart';
 import 'package:mazad_app/features/auth/config/auth.route.dart';
-
+import 'package:mazad_app/features/banner/config/banner_navigator.dart';
 
 part 'navigator_base.dart';
 
 class AppRouter {
   final routerConfig = GoRouter(
     initialLocation: '/login', //TODO home screen
-    routes: [...AuthRoute.routes, ...AuctionRoute.routes],
+    routes: [
+      ...AuthRoute.routes,
+      ...AuctionRoute.routes,
+      ...BannerNavigator.routes,
+    ],
     debugLogDiagnostics: true,
     redirect: _handelRedirect,
   );
