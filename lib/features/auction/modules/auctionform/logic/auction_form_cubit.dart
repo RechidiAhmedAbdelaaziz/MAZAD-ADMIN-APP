@@ -13,16 +13,16 @@ class AuctionFormCubit extends Cubit<AuctionFormState> {
   AuctionFormCubit() : super(AuctionFormState.initial());
 
   void loadDto([String? id]) async {
-    emit(state.loading());
+    emit(state._loading());
 
-    if (id == null) return emit(state.loaded(CreateAuctionDto()));
+    if (id == null) return emit(state._loaded(CreateAuctionDto()));
 
     final result = await _auctionRepo.getAuction(id);
 
     result.when(
       success:
-          (auction) => emit(state.loaded(UpdateAuctionDto(auction))),
-      error: (error) => emit(state.error(error.message)),
+          (auction) => emit(state._loaded(UpdateAuctionDto(auction))),
+      error: (error) => emit(state._error(error.message)),
     );
   }
 
@@ -41,8 +41,8 @@ class AuctionFormCubit extends Cubit<AuctionFormState> {
             );
 
     result.when(
-      success: (auction) => emit(state.saved(auction)),
-      error: (error) => emit(state.error(error.message)),
+      success: (auction) => emit(state._saved(auction)),
+      error: (error) => emit(state._error(error.message)),
     );
   }
 

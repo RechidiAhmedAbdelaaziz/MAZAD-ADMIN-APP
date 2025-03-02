@@ -23,16 +23,16 @@ class AuctionFormState extends ErrorState {
 
   factory AuctionFormState.initial() => AuctionFormState();
 
-  AuctionFormState loading() =>
+  AuctionFormState _loading() =>
       _copyWith(status: _AuctionFormStatus.loading);
 
-  AuctionFormState loaded(AuctionDto dto) =>
+  AuctionFormState _loaded(AuctionDto dto) =>
       _copyWith(dto: dto, status: _AuctionFormStatus.loaded);
 
-  AuctionFormState saved(AuctionModel auction) =>
+  AuctionFormState _saved(AuctionModel auction) =>
       _SavedAuctionFormState(auction, this);
 
-  AuctionFormState error(String error) =>
+  AuctionFormState _error(String error) =>
       _copyWith(error: error, status: _AuctionFormStatus.error);
 
   AuctionFormState _copyWith({

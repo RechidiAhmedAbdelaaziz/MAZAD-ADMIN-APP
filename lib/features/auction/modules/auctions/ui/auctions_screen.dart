@@ -45,11 +45,13 @@ class AuctionsScreen extends StatelessWidget {
         ),
         child: PaginationBuilder(
           items: auctions,
-          itemBuilder: (auction) => InkWell(
-              onTap: () {
-                //TODO Go to Auction products screen
-              },
-            child: _AuctionItem(auction)),
+          itemBuilder:
+              (auction) => InkWell(
+                onTap: () {
+                  //TODO Go to Auction products screen
+                },
+                child: _AuctionItem(auction),
+              ),
           isLoading: context.select(
             (AuctionsCubit cubit) => cubit.state.isLoading,
           ),
@@ -112,7 +114,7 @@ class _AuctionItem extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '${auction.price}',
+                      '${auction.subscriptionPrice}',
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: KColors.dark,

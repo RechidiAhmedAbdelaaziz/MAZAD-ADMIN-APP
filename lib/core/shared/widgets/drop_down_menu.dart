@@ -1,6 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazad_app/core/extension/localization.extension.dart';
 import 'package:mazad_app/core/themes/colors.dart';
 
 class KDropDownMenu extends StatefulWidget {
@@ -70,10 +71,10 @@ class _KDropDownMenuState extends State<KDropDownMenu> {
           ),
           items: widget.items,
           hintText: widget.hintText,
-          initialItem:
-              widget.items.contains(widget.controller.text)
+          initialItem: (widget.items.contains(widget.controller.text)
                   ? widget.controller.text
-                  : widget.initialValue,
+                  : widget.initialValue)
+              ?.tr(context),
           onChanged: (value) {
             if (value != null) widget.controller.text = value;
           },

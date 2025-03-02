@@ -6,7 +6,7 @@ part 'auction_api.g.dart';
 
 @RestApi()
 abstract class AuctionApi {
-  factory AuctionApi(Dio dio, {String baseUrl}) = _AuctionApi;
+  factory AuctionApi(Dio dio, {String baseUrl , ParseErrorLogger? errorLogger}) = _AuctionApi;
 
   @GET('/auctions')
   Future<PaginatedDataResponse> getAuctions(

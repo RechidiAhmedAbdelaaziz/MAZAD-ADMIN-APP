@@ -65,7 +65,7 @@ class UpdateAuctionDto extends AuctionDto {
           text: _auction.region,
         ),
         priceController: TextEditingController(
-          text: _auction.price.toString(),
+          text: _auction.subscriptionPrice.toString(),
         ),
         endingDateController: EditingController<DateTime>(
           _auction.endingDate,
@@ -84,7 +84,8 @@ class UpdateAuctionDto extends AuctionDto {
       json['region'] = regionController.text;
     }
 
-    if (priceController.text != _auction.price.toString()) {
+    if (priceController.text !=
+        _auction.subscriptionPrice.toString()) {
       json['price'] = int.tryParse(priceController.text);
     }
 

@@ -6,7 +6,11 @@ part 'auth.api.g.dart';
 
 @RestApi()
 abstract class AuthApi {
-  factory AuthApi(Dio dio, {String baseUrl}) = _AuthApi;
+  factory AuthApi(
+    Dio dio, {
+    String baseUrl,
+    ParseErrorLogger? errorLogger,
+  }) = _AuthApi;
 
   @POST("/auth/login")
   Future<AuthResponse> login(@Body() Map<String, dynamic> body);
@@ -15,7 +19,9 @@ abstract class AuthApi {
   Future<AuthResponse> register(@Body() Map<String, dynamic> body);
 
   @GET("/auth/refresh")
-  Future<AuthResponse> refreshToken( @Query("refresh_token") String refreshToken);
+  Future<AuthResponse> refreshToken(
+    @Query("refresh_token") String refreshToken,
+  );
 
   @POST("/auth/verify") //! GUARDED
   Future<AuthResponse> verify(@Body() Map<String, dynamic> body);

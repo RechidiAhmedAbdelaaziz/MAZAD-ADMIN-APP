@@ -10,7 +10,7 @@ class AuctionModel {
     this.title,
     this.endingDate,
     this.region,
-    this.price,
+    this.subscriptionPrice,
   });
 
   @JsonKey(name: '_id')
@@ -19,7 +19,7 @@ class AuctionModel {
   final String? title;
   final DateTime? endingDate;
   final String? region;
-  final double? price;
+  final double? subscriptionPrice;
 
   factory AuctionModel.fromJson(Map<String, dynamic> json) =>
       _$AuctionModelFromJson(json);

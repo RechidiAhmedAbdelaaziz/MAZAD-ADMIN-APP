@@ -32,4 +32,10 @@ extension Validators on String? {
     final RegExp nameRegex = RegExp(r'^[a-zA-Z ]{2,}$');
     return nameRegex.hasMatch(this!);
   }
+
+  bool get isNumeric {
+    if (this == null) return false;
+    final RegExp numricRegex = RegExp(r'^[0-9]+$');
+    return numricRegex.hasMatch(this!);
+  }
 }
