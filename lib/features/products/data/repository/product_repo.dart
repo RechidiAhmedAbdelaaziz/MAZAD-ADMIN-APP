@@ -10,17 +10,20 @@ import '../source/product_api.dart';
 class ProductRepo extends NetworkRepository {
   final _productApi = locator<ProductApi>();
 
-  RepoListResult<ProductModel> getProducts(PaginationDto query) =>
-      tryApiCall(() async {
-        final response = await _productApi.getProducts(
-          query.toJson(),
-        );
+  RepoListResult<ProductModel> getProducts(
+    String auctionId,
+    PaginationDto query,
+  ) => tryApiCall(() async {
+    final response = await _productApi.getProducts(
+      auctionId,
+      query.toJson(),
+    );
 
-        return PaginationResult.fromResponse(
-          response: response,
-          fromJson: ProductModel.fromJson,
-        );
-      });
+    return PaginationResult.fromResponse(
+      response: response,
+      fromJson: ProductModel.fromJson,
+    );
+  });
 
   RepoResult<ProductModel> getProduct(String id) =>
       tryApiCall(() async {
@@ -28,20 +31,20 @@ class ProductRepo extends NetworkRepository {
         return ProductModel.fromJson(response.data!);
       });
 
-  RepoResult<ProductModel> createProduct(CreateProductDto dto) => tryApiCall(
-        () async {
-          final response = await _productApi.createProduct(await dto.toMap());
-          return ProductModel.fromJson(response.data!);
-        },
-      );
+  RepoResult<ProductModel> createProduct(CreateProductDto dto) =>
+      tryApiCall(() async {
+        final response = await _productApi.createProduct(
+          await dto.toMap(),
+        );
+        return ProductModel.fromJson(response.data!);
+      });
 
-  RepoResult<ProductModel> updateProduct(UpdateProductDto dto) => tryApiCall(
-        () async {
-          final response = await _productApi.updateProduct(
-            dto.id,
-            await dto.toMap(),
-          );
-          return ProductModel.fromJson(response.data!);
-        },
-      );
+  RepoResult<ProductModel> updateProduct(UpdateProductDto dto) =>
+      tryApiCall(() async {
+        final response = await _productApi.updateProduct(
+          dto.id,
+          await dto.toMap(),
+        );
+        return ProductModel.fromJson(response.data!);
+      });
 }

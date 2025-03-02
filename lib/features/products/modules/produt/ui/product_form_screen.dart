@@ -20,118 +20,156 @@ class ProductFormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dto = context.read<ProductCubit>().state.dto;
     return BlocListener<ProductCubit, ProductState>(
       listener: (context, state) {
         state.onError(context.showErrorSnackbar);
 
         state.onSave(context.back);
       },
-      child: Scaffold(
-        appBar: AppBar(title: Text('Product'.tr(context))),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              ImagesField(
-                controller: dto.imagesController,
-                height: 509.h,
-                width: 408.w,
-                borderRadius: 33.r,
-              ),
-              heightSpace(16),
-
-              AppTextFormField(
-                controller: dto.nameController,
-                title: 'ProductName'.tr(context),
-                validator:
-                    (value) =>
-                        value.isEmpty
-                            ? 'RequiredField'.tr(context)
-                            : null,
-              ),
-              heightSpace(16),
-
-              AppTextFormField(
-                controller: dto.descriptionController,
-                title: 'ProductDescription'.tr(context),
-                keyboardType: TextInputType.multiline,
-                validator:
-                    (value) =>
-                        value.isEmpty
-                            ? 'RequiredField'.tr(context)
-                            : null,
-              ),
-              heightSpace(16),
-
-              KDropDownMenu(
-                items: StaticData.categories,
-                controller: dto.categoryController,
-                title: 'Category'.tr(context),
-                validator:
-                    (value) =>
-                        value.isEmpty
-                            ? 'RequiredField'.tr(context)
-                            : null,
-              ),
-              heightSpace(16),
-
-              AppTextFormField(
-                controller: dto.priceController,
-                title: 'ProductPrice'.tr(context),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator:
-                    (value) =>
-                        value.isEmpty
-                            ? 'RequiredField'.tr(context)
-                            : value.isNumeric
-                            ? null
-                            : 'InvalidNumber'.tr(context),
-              ),
-              heightSpace(16),
-
-              AppTextFormField(
-                controller: dto.stockController,
-                title: 'ProductQuantity'.tr(context),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator:
-                    (value) =>
-                        value.isEmpty
-                            ? 'RequiredField'.tr(context)
-                            : value.isNumeric
-                            ? null
-                            : 'InvalidNumber'.tr(context),
-              ),
-              heightSpace(16),
-
-              ValuesFormField(
-                controller: dto.suggestedPricesController,
-                title: 'SuggestedPrices'.tr(context),
-                maxLength: 40,
-              ),
-              heightSpace(25),
-
-              Builder(
+      child:
+          !context.select(
+                (ProductCubit cubit) => cubit.state.isLoaded,
+              )
+              ? Center(child: CircularProgressIndicator())
+              : Builder(
                 builder: (context) {
-                  return SubmitButton(
-                    title: 'Save'.tr(context),
-                    onTap: context.read<ProductCubit>().save,
-                    isLoading: context.select(
-                      (ProductCubit cubit) => cubit.state.isLoading,
+                  final dto = context.read<ProductCubit>().state.dto;
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: Text('Product'.tr(context)),
+                    ),
+                    body: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ImagesField(
+                              controller: dto.imagesController,
+                              height: 509.h,
+                              width: 408.w,
+                              borderRadius: 33.r,
+                            ),
+                            heightSpace(16),
+
+                            AppTextFormField(
+                              controller: dto.nameController,
+                              title: 'ProductName'.tr(context),
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : null,
+                            ),
+                            heightSpace(16),
+
+                            AppTextFormField(
+                              controller: dto.descriptionController,
+                              title: 'ProductDescription'.tr(context),
+                              keyboardType: TextInputType.multiline,
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : null,
+                            ),
+                            heightSpace(16),
+
+                            KDropDownMenu(
+                              items: StaticData.categories,
+                              controller: dto.categoryController,
+                              title: 'Category'.tr(context),
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : null,
+                            ),
+                            heightSpace(16),
+
+                            AppTextFormField(
+                              controller: dto.priceController,
+                              title: 'ProductPrice'.tr(context),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter
+                                    .digitsOnly,
+                              ],
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : value.isNumeric
+                                          ? null
+                                          : 'InvalidNumber'.tr(
+                                            context,
+                                          ),
+                            ),
+                            heightSpace(16),
+
+                            AppTextFormField(
+                              controller: dto.stockController,
+                              title: 'ProductQuantity'.tr(context),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter
+                                    .digitsOnly,
+                              ],
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : value.isNumeric
+                                          ? null
+                                          : 'InvalidNumber'.tr(
+                                            context,
+                                          ),
+                            ),
+                            heightSpace(16),
+
+                            ValuesFormField(
+                              controller:
+                                  dto.suggestedPricesController,
+                              title: 'SuggestedPrices'.tr(context),
+                              maxLength: 40,
+                            ),
+                            heightSpace(25),
+
+                            Builder(
+                              builder: (context) {
+                                return SubmitButton(
+                                  title: 'Save'.tr(context),
+                                  onTap:
+                                      context
+                                          .read<ProductCubit>()
+                                          .save,
+                                  isLoading: context.select(
+                                    (ProductCubit cubit) =>
+                                        cubit.state.isLoading,
+                                  ),
+                                );
+                              },
+                            ),
+                            heightSpace(12),
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 },
               ),
-              heightSpace(12),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

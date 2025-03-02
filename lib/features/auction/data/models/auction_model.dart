@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auction_model.g.dart';
 
 @JsonSerializable(createToJson: false)
-class AuctionModel {
-  AuctionModel({
+class AuctionModel extends Equatable {
+  const AuctionModel({
     this.id,
     this.productNumber,
     this.title,
@@ -23,4 +24,7 @@ class AuctionModel {
 
   factory AuctionModel.fromJson(Map<String, dynamic> json) =>
       _$AuctionModelFromJson(json);
+
+  @override
+  List<Object?> get props => [id];
 }

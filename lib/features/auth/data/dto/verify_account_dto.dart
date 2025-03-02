@@ -17,6 +17,8 @@ class OtpDTO extends FormDTO {
   Future<Map<String, dynamic>> toMap() async {
     return {'otp': otpController.text};
   }
+
+  
 }
 
 class VerifyAccountDTO extends OtpDTO {}

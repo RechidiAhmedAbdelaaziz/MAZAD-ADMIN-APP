@@ -50,6 +50,8 @@ class CreateAuctionDto extends AuctionDto {
       'price': int.tryParse(priceController.text),
       'endingDate': endingDateController.value?.toIso8601String(),
     }.withoutNullsOrEmpty();
+
+    
   }
 }
 

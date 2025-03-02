@@ -1,11 +1,12 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mazad_app/features/auction/data/models/auction_model.dart';
 
 part 'product_model.g.dart';
 
 @JsonSerializable(createToJson: false)
-class ProductModel {
-  ProductModel({
+class ProductModel extends Equatable {
+  const ProductModel({
     this.id,
     this.name,
     this.description,
@@ -30,4 +31,8 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);
+
+  @override
+  List<Object?> get props => [id];
 }
+
