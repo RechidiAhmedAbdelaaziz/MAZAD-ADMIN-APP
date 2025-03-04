@@ -38,7 +38,7 @@ class BannersState extends ErrorState {
   );
 
   BannersState _updateBanner(BannerModel banner) => _copyWith(
-    banners: banners.without(banner).withReplace(banner),
+    banners: banners.withReplace(banner),
     status: _BannersStatus.loaded,
   );
 

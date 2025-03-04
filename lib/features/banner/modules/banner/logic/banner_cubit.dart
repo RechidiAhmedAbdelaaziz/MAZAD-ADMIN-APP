@@ -27,6 +27,8 @@ class BannerCubit extends Cubit<BannerState> {
   }
 
   void save() async {
+    emit(state._loading());
+
     final dto = state.dto;
 
     if (!dto.validate()) return;

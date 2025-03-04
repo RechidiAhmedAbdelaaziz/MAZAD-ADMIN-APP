@@ -16,7 +16,7 @@ import 'package:mazad_app/core/shared/widgets/submit_button.dart';
 import 'package:mazad_app/core/shared/widgets/text_form_field.dart';
 import 'package:mazad_app/core/themes/colors.dart';
 import 'package:mazad_app/features/auction/data/models/auction_model.dart';
-import 'package:mazad_app/features/auction/modules/auctionform/ui/auction_form.dart';
+import 'package:mazad_app/features/auction/modules/auctions/ui/auction_selector.dart';
 import 'package:mazad_app/features/products/modules/produt/logic/product_cubit.dart';
 
 class ProductFormScreen extends StatelessWidget {
@@ -32,12 +32,16 @@ class ProductFormScreen extends StatelessWidget {
       },
       child:
           !context.select(
-                (ProductCubit cubit) => cubit.state.isLoaded,
-              )
+                    (ProductCubit cubit) => cubit.state.isLoaded,
+                  ) ||
+                  context.select(
+                    (ProductCubit cubit) => cubit.state.isLoading,
+                  )
               ? Center(child: CircularProgressIndicator())
               : Builder(
                 builder: (context) {
                   final dto = context.read<ProductCubit>().state.dto;
+
                   return Scaffold(
                     appBar: AppBar(
                       title: Text('Product'.tr(context)),
@@ -71,7 +75,7 @@ class ProductFormScreen extends StatelessWidget {
                                             )
                                             : null,
                                 builder: _buildAuctionItem,
-                                formBuilder: () => Container(),
+                                formBuilder: () => AuctionSelector(),
                               ),
                               heightSpace(16),
 
@@ -169,7 +173,7 @@ class ProductFormScreen extends StatelessWidget {
                                 maxLength: 40,
                                 validator:
                                     (value) =>
-                                        value?.isEmpty ?? true
+                                        value?.isEmpty ?? false
                                             ? 'RequiredField'.tr(
                                               context,
                                             )
@@ -208,9 +212,9 @@ class ProductFormScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey),
+        color: KColors.lightGrey,
+        borderRadius: BorderRadius.circular(24.r),
+        border: Border.all(color: KColors.dark),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

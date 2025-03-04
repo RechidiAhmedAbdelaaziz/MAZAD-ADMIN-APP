@@ -22,10 +22,10 @@ class ProductModel extends Equatable {
   final String? id;
   final String? name;
   final String? description;
-  final double? price;
+  final int? price;
   final List<String>? images;
   final int? stock;
-  final List<double>? suggestedPrices;
+  final List<int>? suggestedPrices;
   final AuctionModel? auction;
   final String? category;
 

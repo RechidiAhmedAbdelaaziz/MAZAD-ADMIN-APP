@@ -16,6 +16,7 @@ class BannerModel extends Equatable {
   final String? id;
   final String? title;
   final String? region;
+  @JsonKey(name: 'image')
   final String? imageUrl;
 
   factory BannerModel.fromJson(Map<String, dynamic> json) =>

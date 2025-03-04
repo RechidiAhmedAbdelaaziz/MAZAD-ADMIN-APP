@@ -6,7 +6,7 @@ import 'package:mazad_app/core/shared/classes/editioncontollers/list_generic_edi
 import 'package:mazad_app/core/shared/widgets/text_form_field.dart';
 
 class ValuesFormField extends StatefulWidget {
-  final ListEditingcontroller<double> controller;
+  final ListEditingcontroller<int> controller;
 
   final String title;
   final int maxLength;
@@ -55,7 +55,7 @@ class _ValuesFormFieldState extends State<ValuesFormField> {
 
                       setState(() {
                         widget.controller.addValue(
-                          double.parse(controller.text),
+                          int.parse(controller.text),
                         );
                       });
                     },

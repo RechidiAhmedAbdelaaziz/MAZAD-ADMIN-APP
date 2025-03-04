@@ -12,7 +12,7 @@ abstract class ProductDto extends FormDTO {
   final TextEditingController descriptionController;
   final TextEditingController priceController;
   final TextEditingController stockController;
-  final ListEditingcontroller<double> suggestedPricesController;
+  final ListEditingcontroller<int> suggestedPricesController;
   final EditingController<AuctionModel> auctionController;
   final TextEditingController categoryController;
 
@@ -46,7 +46,7 @@ class CreateProductDto extends ProductDto {
         descriptionController: TextEditingController(),
         priceController: TextEditingController(),
         stockController: TextEditingController(),
-        suggestedPricesController: ListEditingcontroller<double>(),
+        suggestedPricesController: ListEditingcontroller<int>(),
         auctionController: EditingController<AuctionModel>(),
         categoryController: TextEditingController(),
       );
@@ -57,7 +57,7 @@ class CreateProductDto extends ProductDto {
       'name': nameController.text,
       'images': await imagesController.value.imageUrls,
       'description': descriptionController.text,
-      'price': double.parse(priceController.text),
+      'price': int.parse(priceController.text),
       'stock': int.parse(stockController.text),
       'suggestedPrices': suggestedPricesController.value,
       'auction': auctionController.value?.id,
@@ -88,7 +88,7 @@ class UpdateProductDto extends ProductDto {
         stockController: TextEditingController(
           text: _product.stock.toString(),
         ),
-        suggestedPricesController: ListEditingcontroller<double>(
+        suggestedPricesController: ListEditingcontroller<int>(
           _product.suggestedPrices,
         ),
         auctionController: EditingController<AuctionModel>(
@@ -112,7 +112,7 @@ class UpdateProductDto extends ProductDto {
         'description': descriptionController.text,
 
       if (double.parse(priceController.text) != _product.price)
-        'price': double.parse(priceController.text),
+        'price': int.parse(priceController.text),
 
       if (int.parse(stockController.text) != _product.stock)
         'stock': int.parse(stockController.text),

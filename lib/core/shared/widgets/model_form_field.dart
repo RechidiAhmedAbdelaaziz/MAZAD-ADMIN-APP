@@ -30,8 +30,18 @@ class ModelFormField<T> extends StatefulWidget {
 
 class _ModelFormFieldState<T> extends State<ModelFormField<T>> {
   @override
+  void initState() {
+    widget.controller.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormField(
+      validator:
+          (value) => widget.validator?.call(widget.controller.value),
       builder:
           (state) => Column(
             spacing: 8.h,

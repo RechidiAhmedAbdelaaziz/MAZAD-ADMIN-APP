@@ -47,7 +47,7 @@ class CreateAuctionDto extends AuctionDto {
     return {
       'title': titleController.text,
       'region': regionController.text,
-      'subscriptionFeeDinar': int.tryParse(priceController.text),
+      'price': int.tryParse(priceController.text),
       'endingDate': endingDateController.value?.toIso8601String(),
     }.withoutNullsOrEmpty();
   }
@@ -86,7 +86,7 @@ class UpdateAuctionDto extends AuctionDto {
 
     if (priceController.text !=
         _auction.subscriptionPrice.toString()) {
-      json['subscriptionFeeDinar'] = int.tryParse(
+      json['price'] = int.tryParse(
         priceController.text,
       );
     }

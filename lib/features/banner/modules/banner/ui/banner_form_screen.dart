@@ -28,8 +28,11 @@ class BannerFormScreen extends StatelessWidget {
         appBar: AppBar(title: Text('Banner'.tr(context))),
         body:
             !context.select(
-                  (BannerCubit cubit) => cubit.state.isLoaded,
-                )
+                      (BannerCubit cubit) => cubit.state.isLoaded,
+                    ) ||
+                    context.select(
+                      (BannerCubit cubit) => cubit.state.isLoading,
+                    )
                 ? Center(child: CircularProgressIndicator())
                 : Builder(
                   builder: (context) {
@@ -39,53 +42,62 @@ class BannerFormScreen extends StatelessWidget {
                         horizontal: 16.w,
                         vertical: 8.h,
                       ),
-                      child: Column(
-                        children: [
-                          ImageField(
-                            controller: dto.imageController,
-                            height: 509.h,
-                            width: 408.w,
-                            borderRadius: 33.r,
-                          ),
-                          heightSpace(16),
+                      child: Form(
+                        key: dto.formKey,
+                        child: Column(
+                          children: [
+                            ImageField(
+                              controller: dto.imageController,
+                              height: 509.h,
+                              width: 408.w,
+                              borderRadius: 33.r,
+                            ),
+                            heightSpace(16),
 
-                          AppTextFormField(
-                            controller: dto.titleController,
-                            title: 'Title'.tr(context),
-                            validator:
-                                (value) =>
-                                    value.isEmpty
-                                        ? 'RequiredField'.tr(context)
-                                        : null,
-                          ),
-                          heightSpace(16),
+                            AppTextFormField(
+                              controller: dto.titleController,
+                              title: 'Title'.tr(context),
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : null,
+                            ),
+                            heightSpace(16),
 
-                          KDropDownMenu(
-                            items: StaticData.regions,
-                            controller: dto.regionController,
-                            title: 'Region'.tr(context),
-                            validator:
-                                (value) =>
-                                    value.isEmpty
-                                        ? 'RequiredField'.tr(context)
-                                        : null,
-                          ),
-                          heightSpace(16),
+                            KDropDownMenu(
+                              items: StaticData.regions,
+                              controller: dto.regionController,
+                              title: 'Region'.tr(context),
+                              validator:
+                                  (value) =>
+                                      value.isEmpty
+                                          ? 'RequiredField'.tr(
+                                            context,
+                                          )
+                                          : null,
+                            ),
+                            heightSpace(16),
 
-                          Builder(
-                            builder: (context) {
-                              return SubmitButton(
-                                title: 'Save'.tr(context),
-                                onTap:
-                                    context.read<BannerCubit>().save,
-                                isLoading: context.select(
-                                  (BannerCubit cubit) =>
-                                      cubit.state.isLoading,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                            Builder(
+                              builder: (context) {
+                                return SubmitButton(
+                                  title: 'Save'.tr(context),
+                                  onTap:
+                                      context
+                                          .read<BannerCubit>()
+                                          .save,
+                                  isLoading: context.select(
+                                    (BannerCubit cubit) =>
+                                        cubit.state.isLoading,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

@@ -58,7 +58,10 @@ class _ImagesFieldState extends State<ImagesField> {
                       : null,
               onDeleted: widget.controller.removeValue,
               onPicked: (image) {
-                widget.controller.addValue(image);
+                widget.controller.setList([
+                  ...widget.controller.value,
+                  image,
+                ]);
               },
               onEdited:
                   (image) =>

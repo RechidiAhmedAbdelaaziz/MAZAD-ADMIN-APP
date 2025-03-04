@@ -16,9 +16,7 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = context.select(
-      (ProductsCubit cubit) => cubit.state.products,
-    );
+    final products = context.watch<ProductsCubit>().state.products;
     return Scaffold(
       appBar: AppBar(
         title: Text('Products'.tr(context)),
@@ -122,7 +120,10 @@ class ProductsScreen extends StatelessWidget {
       PopupMenuItem(
         child: Text('Edit'.tr(context)),
         onTap:
-            () => context.to(ProductNavigator.editProduct(product)),
+            () => context.toWith<ProductModel>(
+              ProductNavigator.editProduct(product),
+              onResult: context.read<ProductsCubit>().updateProduct,
+            ),
       ),
       PopupMenuItem(
         child: Text('Delete'.tr(context)),

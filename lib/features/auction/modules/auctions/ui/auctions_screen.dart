@@ -19,9 +19,8 @@ class AuctionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final auctions = context.select(
-      (AuctionsCubit cubit) => cubit.state.auctions,
-    );
+    final auctions = context.watch<AuctionsCubit>().state.auctions;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Auctions'.tr(context)),
@@ -118,7 +117,7 @@ class _AuctionItem extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        '${auction.productNumber.toString()} ${'Products'.tr(context)}',
+                        '${auction.productsNumber.toString()} ${'Products'.tr(context)}',
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: KColors.darkGrey,
@@ -138,18 +137,11 @@ class _AuctionItem extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        '${auction.subscriptionPrice} ',
+                        '${auction.subscriptionPrice} DZD',
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: KColors.dark,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'DZD',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: KColors.grey,
                         ),
                       ),
                     ],

@@ -1,25 +1,24 @@
 part of 'dio_interceptors.dart';
 
 class DioErrorInterceptor extends InterceptorsWrapper {
+  final authCacheHelper = locator<AuthCache>();
+
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    //       if (error.response?.statusCode == 401) {
-    //         final refreshToken = await authCacheHelper.refreshToken;
+  void onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    if (err.response?.statusCode == 401) {
+      locator<AuthCubit>().refreshToken();
 
-    //         if (refreshToken != null) {
-    //           final authCubit = locator<AuthCubit>();
-    //           await authCubit.refreshToken(refreshToken);
+      return handler.resolve(
+        await locator<Dio>().fetch(err.requestOptions),
+      );
+    }
 
-    //           return handler
-    //               .resolve(await _dio!.fetch(error.requestOptions));
-    //         }
-    //       }
+    return handler.next(err);
 
-    //       return handler.next(error);
-    //     },
-    //   );
-    // }
-    super.onError(err, handler);
+    // super.onError(error, handler);
   }
 
   DioErrorInterceptor._();
