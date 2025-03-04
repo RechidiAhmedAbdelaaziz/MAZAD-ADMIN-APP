@@ -11,6 +11,7 @@ import 'package:mazad_app/core/shared/widgets/text_button.dart';
 import 'package:mazad_app/core/shared/widgets/text_form_field.dart';
 import 'package:mazad_app/core/themes/colors.dart';
 import 'package:mazad_app/core/themes/icons.dart';
+import 'package:mazad_app/features/auction/config/auction_navigator.dart';
 import 'package:mazad_app/features/auth/config/auth.navigator.dart';
 import 'package:mazad_app/features/auth/modules/login/logic/login.cubit.dart';
 
@@ -22,9 +23,7 @@ class LoginScreen extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         state.onError(context.showErrorDialog);
-        state.onSuccess(() {
-          //TODO go to home
-        });
+        state.onSuccess(() => context.offAll(AuctionNavigator.auctions()));
       },
       child: Scaffold(
         backgroundColor: KColors.background,

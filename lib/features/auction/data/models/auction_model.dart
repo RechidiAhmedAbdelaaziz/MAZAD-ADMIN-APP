@@ -21,6 +21,7 @@ class AuctionModel extends Equatable {
   final DateTime? endingDate;
   final String? region;
   final double? subscriptionPrice;
+  // status , categoties , 
 
   factory AuctionModel.fromJson(Map<String, dynamic> json) =>
       _$AuctionModelFromJson(json);

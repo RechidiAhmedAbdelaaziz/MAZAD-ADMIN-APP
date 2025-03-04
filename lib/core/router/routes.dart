@@ -18,5 +18,11 @@ abstract class AppRoutes {
   static const String bannerCreate = 'BANNER_CREATE';
   static const String bannerUpdate = 'BANNER_UPDATE';
 
+  //* Product ROUTES
+  static const String products = 'PRODUCTS';
+  static const String product = 'PRODUCT';
+  static const String productCreate = 'PRODUCT_CREATE';
+  static const String productUpdate = 'PRODUCT_UPDATE';
+
 
 }

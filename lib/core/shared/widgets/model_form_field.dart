@@ -43,7 +43,7 @@ class _ModelFormFieldState<T> extends State<ModelFormField<T>> {
                     Text(
                       widget.title!,
                       style: TextStyle(
-                        color: KColors.white,
+                        color: KColors.dark,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),

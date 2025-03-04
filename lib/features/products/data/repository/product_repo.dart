@@ -47,4 +47,8 @@ class ProductRepo extends NetworkRepository {
         );
         return ProductModel.fromJson(response.data!);
       });
+
+  RepoResult<void> deleteProduct(ProductModel product) => tryApiCall(
+    () async => await _productApi.deleteProduct(product.id!),
+  );
 }

@@ -14,7 +14,7 @@ abstract class AuctionRoute {
       name: AppRoutes.auctions,
       builder:
           (context, state) => BlocProvider(
-            create: (context) => AuctionsCubit(),
+            create: (context) => AuctionsCubit()..load(),
             child: AuctionsScreen(),
           ),
     ),

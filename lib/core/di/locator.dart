@@ -5,6 +5,7 @@ import 'package:mazad_app/core/router/router.dart';
 import 'package:mazad_app/features/auction/config/auction_dependency.dart';
 import 'package:mazad_app/features/auth/config/auth.dependency.dart';
 import 'package:mazad_app/features/banner/config/banner_dependency.dart';
+import 'package:mazad_app/features/products/config/product_dependency.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mazad_app/core/services/cache/cache.service.dart';
 import 'package:mazad_app/core/services/cloudstorage/cloud_storage.service.dart';
@@ -43,6 +44,7 @@ Future<void> setupLocator() async {
   AuthDependency.init();
   AuctionDependency.init();
   BannerDependency.inti();
+  ProductDependency.init();
 
   locator.allowReassignment = true;
 }

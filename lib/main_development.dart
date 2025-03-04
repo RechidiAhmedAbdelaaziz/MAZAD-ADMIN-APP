@@ -8,10 +8,10 @@ import 'package:mazad_app/core/themes/colors.dart';
 void main() async {
   // Define the flavor
   FlavorConfig(
-    name: "DEVELOPMENT",
+    name: "DEV",
     color: KColors.primary,
     location: BannerLocation.topEnd,
-    variables: {"baseUrl": "http://localhost:3000"},
+    variables: {"baseUrl": "http://192.168.1.9:3000/api/v1"},
   );
 
   // Initialize the ScreenUtil

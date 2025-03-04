@@ -3,19 +3,24 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazad_app/core/di/locator.dart';
 import 'package:mazad_app/features/auction/config/auction_route.dart';
 import 'package:mazad_app/features/auth/config/auth.route.dart';
+import 'package:mazad_app/features/auth/logic/auth.cubit.dart';
 import 'package:mazad_app/features/banner/config/banner_navigator.dart';
+import 'package:mazad_app/features/home/config/home_navigator.dart';
+import 'package:mazad_app/features/products/config/products_navigator.dart';
 
 part 'navigator_base.dart';
 
 class AppRouter {
   final routerConfig = GoRouter(
-    initialLocation: '/login', //TODO home screen
     routes: [
       ...AuthRoute.routes,
       ...AuctionRoute.routes,
       ...BannerNavigator.routes,
+      ...HomeNavigator.routes,
+      ...ProductNavigator.routes,
     ],
     debugLogDiagnostics: true,
     redirect: _handelRedirect,
@@ -24,9 +29,9 @@ class AppRouter {
   static FutureOr<String?> _handelRedirect(
     BuildContext context,
     GoRouterState state,
-  ) {
-    // final authCubit = locator<AuthCubit>();
-    // if (authCubit.state.isAuthanticated) return null;
-    // return '/login';
+  ) async {
+    final authCubit = locator<AuthCubit>();
+    if (await authCubit.isAuthenticated) return null;
+    return '/login';
   }
 }

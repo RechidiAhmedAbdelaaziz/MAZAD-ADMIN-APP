@@ -13,7 +13,7 @@ abstract class ProductApi {
   }) = _ProductApi;
 
 
-  @GET('/products/{auctionId}') //* GET ALL ~ {{URL}}/products/:auctionId
+  @GET('/products/auction/{auctionId}') //* GET ALL ~ {{URL}}/products/:auctionId
   Future<PaginatedDataResponse> getProducts(
     @Path('auctionId') String auctionId,
     @Queries() Map<String, dynamic> query,

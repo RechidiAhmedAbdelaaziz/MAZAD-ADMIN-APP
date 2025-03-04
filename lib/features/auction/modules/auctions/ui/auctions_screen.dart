@@ -10,6 +10,7 @@ import 'package:mazad_app/core/shared/widgets/pagination_builder.dart';
 import 'package:mazad_app/core/themes/colors.dart';
 import 'package:mazad_app/features/auction/config/auction_navigator.dart';
 import 'package:mazad_app/features/auction/data/models/auction_model.dart';
+import 'package:mazad_app/features/products/config/products_navigator.dart';
 
 import '../logic/auctions_cubit.dart';
 
@@ -47,9 +48,10 @@ class AuctionsScreen extends StatelessWidget {
           items: auctions,
           itemBuilder:
               (auction) => InkWell(
-                onTap: () {
-                  //TODO Go to Auction products screen
-                },
+                onTap:
+                    () => context.to(
+                      ProductNavigator.products(auction),
+                    ),
                 child: _AuctionItem(auction),
               ),
           isLoading: context.select(
@@ -70,72 +72,97 @@ class _AuctionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      decoration: BoxDecoration(
-        color: KColors.white,
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: KColors.lightGrey),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  auction.title ?? '',
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
+    return InkWell(
+      onTap: () => context.to(ProductNavigator.products(auction)),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: 12.w,
+          vertical: 16.h,
+        ),
+        decoration: BoxDecoration(
+          color: KColors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: KColors.lightGrey),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    auction.title ?? '',
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                heightSpace(8),
-                Text(
-                  '${auction.productNumber.toString()} ${'Products'.tr(context)}',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: KColors.grey,
+                  heightSpace(8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: KColors.darkGrey,
+                        size: 16.sp,
+                      ),
+                      Text(
+                        auction.region ?? '',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: KColors.dark,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        '${auction.productNumber.toString()} ${'Products'.tr(context)}',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: KColors.darkGrey,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                heightSpace(8),
-                Row(
-                  children: [
-                    Text(
-                      auction.endingDate?.toDayMonthYear() ?? '',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: KColors.grey,
+                  heightSpace(8),
+                  Row(
+                    children: [
+                      Text(
+                        auction.endingDate?.toDayMonthYear() ?? '',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: KColors.darkGrey,
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      '${auction.subscriptionPrice}',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: KColors.dark,
-                        fontWeight: FontWeight.bold,
+                      const Spacer(),
+                      Text(
+                        '${auction.subscriptionPrice} ',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: KColors.dark,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'DZD',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: KColors.grey,
+                      Text(
+                        'DZD',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: KColors.grey,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-
-          PopupMenuButton(itemBuilder: _buildOptions),
-        ],
+            PopupMenuButton(
+              itemBuilder: _buildOptions,
+              padding: EdgeInsets.zero,
+            ),
+          ],
+        ),
       ),
     );
   }

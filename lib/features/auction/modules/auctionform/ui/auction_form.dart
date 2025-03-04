@@ -18,7 +18,9 @@ class AuctionFormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final auctionDto = context.read<AuctionFormCubit>().state.dto;
+    final isLoaded = context.select(
+      (AuctionFormCubit cubit) => cubit.state.isLoaded,
+    );
     return BlocListener<AuctionFormCubit, AuctionFormState>(
       listener: (context, state) {
         state.onError(context.showErrorDialog);
@@ -26,22 +28,23 @@ class AuctionFormScreen extends StatelessWidget {
         state.onSave(context.back);
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            auctionDto.isNew
-                ? 'Create'.tr(context) + 'Auction'.tr(context)
-                : 'Edit'.tr(context) + 'Auction'.tr(context),
-          ),
-        ),
+        appBar: AppBar(title: Text('Auction'.tr(context))),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 24.w,
             vertical: 8.h,
           ),
           child: SingleChildScrollView(
-            child: Column(
-              children: [_Form(), heightSpace(25), _SaveButton()],
-            ),
+            child:
+                isLoaded
+                    ? Column(
+                      children: [
+                        _Form(),
+                        heightSpace(25),
+                        _SaveButton(),
+                      ],
+                    )
+                    : Center(child: CircularProgressIndicator()),
           ),
         ),
       ),
@@ -53,51 +56,60 @@ class _Form extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auctionDto = context.read<AuctionFormCubit>().state.dto;
-    return Column(
-      children: [
-        AppTextFormField(
-          title: 'Title'.tr(context),
-          controller: auctionDto.titleController,
-          validator:
-              (value) =>
-                  value!.isEmpty ? 'RequiredField'.tr(context) : null,
-        ),
-        heightSpace(20),
-
-        KDropDownMenu(
-          items: StaticData.regions,
-          controller: auctionDto.regionController,
-          title: 'Region'.tr(context),
-          validator:
-              (value) =>
-                  value!.isEmpty ? 'RequiredField'.tr(context) : null,
-        ),
-        heightSpace(20),
-
-        AppTextFormField(
-          title: 'SubmitPrice'.tr(context),
-          controller: auctionDto.priceController,
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          prefixIcon: Text(
-            "DA",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w800,
-            ),
+    return Form(
+      key: auctionDto.formKey,
+      child: Column(
+        children: [
+          AppTextFormField(
+            title: 'Title'.tr(context),
+            controller: auctionDto.titleController,
+            validator:
+                (value) =>
+                    value!.isEmpty
+                        ? 'RequiredField'.tr(context)
+                        : null,
           ),
-          validator:
-              (value) =>
-                  value!.isEmpty ? 'RequiredField'.tr(context) : null,
-        ),
-        heightSpace(20),
+          heightSpace(20),
 
-        KDatePicker(
-          controller: auctionDto.endingDateController,
-          title: 'EndingDate'.tr(context),
-        ),
-      ],
+          KDropDownMenu(
+            items: StaticData.regions,
+            controller: auctionDto.regionController,
+            title: 'Region'.tr(context),
+            validator:
+                (value) =>
+                    value!.isEmpty
+                        ? 'RequiredField'.tr(context)
+                        : null,
+          ),
+          heightSpace(20),
+
+          AppTextFormField(
+            title: 'SubmitPrice'.tr(context),
+            controller: auctionDto.priceController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            prefixIcon: Text(
+              "DA",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            validator:
+                (value) =>
+                    value!.isEmpty
+                        ? 'RequiredField'.tr(context)
+                        : null,
+          ),
+          heightSpace(20),
+
+          KDatePicker(
+            controller: auctionDto.endingDateController,
+            title: 'EndingDate'.tr(context),
+          ),
+        ],
+      ),
     );
   }
 }

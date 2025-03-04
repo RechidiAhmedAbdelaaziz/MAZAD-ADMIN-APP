@@ -18,6 +18,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit() : super(AuthState.initial());
 
+  Future<bool> get isAuthenticated async =>
+      await _authCache.isAuthenticated;
+
   void checkAuth() async {
     final isAuth = await _authCache.isAuthenticated;
     isAuth
@@ -54,6 +57,4 @@ class AuthCubit extends Cubit<AuthState> {
 
     locator<AppRouter>().routerConfig.goNamed(AppRoutes.login);
   }
-
-  
 }

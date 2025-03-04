@@ -18,7 +18,6 @@ class AppTextFormField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
 
-
   const AppTextFormField({
     super.key,
     this.title,
@@ -53,7 +52,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           Text(
             widget.title!,
             style: TextStyle(
-              color: KColors.white,
+              color: KColors.dark,
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
             ),

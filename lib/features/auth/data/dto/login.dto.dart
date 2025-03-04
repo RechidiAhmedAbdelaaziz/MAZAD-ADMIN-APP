@@ -24,10 +24,8 @@ class LoginDTO extends FormDTO {
   @override
   Future<Map<String, dynamic>> toMap() async {
     return {
-      'phone': phoneController.text,
-      'password': passwordController.text, 
+      'login': phoneController.text,
+      'password': passwordController.text,
     };
   }
-
-
 }

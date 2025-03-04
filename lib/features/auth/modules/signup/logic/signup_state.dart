@@ -38,7 +38,7 @@ class SignupState extends ErrorState {
     );
   }
 
-  void onSuccessfulSignup(VoidCallback onSuccessfulSignup) {
+  void onSuccess(VoidCallback onSuccessfulSignup) {
     if (status == _SignupStatus.success) {
       onSuccessfulSignup();
     }
