@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazad_app/core/localization/localization_cubit.dart';
 
 import 'core/di/locator.dart';
 import 'core/localization/app_localization.dart';
@@ -22,9 +24,13 @@ class TenderApp extends StatelessWidget {
                   : const Size(1920, 1080),
 
           builder: (_, __) {
-            return isProduction
-                ? _MaterialApp()
-                : FlavorBanner(child: _MaterialApp());
+            return BlocProvider(
+              create: (context) => LocalizationCubit(),
+              child:
+                  isProduction
+                      ? _MaterialApp()
+                      : FlavorBanner(child: _MaterialApp()),
+            );
           },
         );
       },
@@ -38,13 +44,16 @@ class _MaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = locator<AppRouter>();
+
+    final local = context.watch<LocalizationCubit>().state;
+
     return MaterialApp.router(
       routerConfig: router.routerConfig,
       theme: ThemeData(fontFamily: 'Roboto'),
       supportedLocales: [
         Locale('fr'), // French
         Locale('en'), // English
-        Locale('ar'), // Arabic
+        // Locale('ar'), // Arabic
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -52,6 +61,7 @@ class _MaterialApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      locale: local,
       localeResolutionCallback: (locale, supportedLocales) {
         if (locale != null &&
             supportedLocales.any(

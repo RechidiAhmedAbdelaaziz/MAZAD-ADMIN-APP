@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class KColors {
   static const primary = Color(0xFFF29F05);
+  static const secondary = Color.fromARGB(255, 239, 76, 1);
 
   static const background = Color(0xFF282828);
 

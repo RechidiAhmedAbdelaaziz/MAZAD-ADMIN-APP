@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mazad_app/core/extension/localization.extension.dart';
 import 'package:mazad_app/core/extension/navigator.extension.dart';
+import 'package:mazad_app/core/localization/localization_cubit.dart';
 import 'package:mazad_app/core/themes/colors.dart';
 import 'package:mazad_app/core/themes/icons.dart';
 import 'package:mazad_app/features/auction/config/auction_navigator.dart';
@@ -18,6 +20,22 @@ class HomeScreen extends StatelessWidget {
         title: SvgPicture.asset(AppAssets.logo, width: 100.w),
         centerTitle: true,
         backgroundColor: KColors.black,
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.language, color: KColors.primary),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(value: 'en', child: Text('English')),
+                PopupMenuItem(value: 'fr', child: Text('Français')),
+              ];
+            },
+            onSelected: (String langCode) {
+              context.read<LocalizationCubit>().changeLanguage(
+                langCode,
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(

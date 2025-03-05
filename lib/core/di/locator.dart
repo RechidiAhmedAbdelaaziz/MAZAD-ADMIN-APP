@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mazad_app/core/localization/localization_cubit.dart';
 import 'package:mazad_app/core/router/router.dart';
 import 'package:mazad_app/features/auction/config/auction_dependency.dart';
 import 'package:mazad_app/features/auth/config/auth.dependency.dart';
 import 'package:mazad_app/features/banner/config/banner_dependency.dart';
+import 'package:mazad_app/features/bid/config/bid_dependency.dart';
 import 'package:mazad_app/features/products/config/product_dependency.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mazad_app/core/services/cache/cache.service.dart';
@@ -40,11 +42,13 @@ Future<void> setupLocator() async {
     () => CloudinaryService(),
   );
 
+
   // Features dependencies
   AuthDependency.init();
   AuctionDependency.init();
   BannerDependency.inti();
   ProductDependency.init();
+  BidDependency.init();
 
   locator.allowReassignment = true;
 }

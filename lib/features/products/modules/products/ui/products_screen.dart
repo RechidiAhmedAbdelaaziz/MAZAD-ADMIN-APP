@@ -7,6 +7,7 @@ import 'package:mazad_app/core/extension/navigator.extension.dart';
 import 'package:mazad_app/core/shared/classes/dimensions.dart';
 import 'package:mazad_app/core/shared/widgets/pagination_builder.dart';
 import 'package:mazad_app/core/themes/colors.dart';
+import 'package:mazad_app/features/bid/config/bid_navigator.dart';
 import 'package:mazad_app/features/products/config/products_navigator.dart';
 import 'package:mazad_app/features/products/data/models/product_model.dart';
 import 'package:mazad_app/features/products/modules/products/logic/products_cubit.dart';
@@ -41,10 +42,7 @@ class ProductsScreen extends StatelessWidget {
           items: products,
           itemBuilder:
               (product) => InkWell(
-                onTap:
-                    () => context.to(
-                      ProductNavigator.productDetail(product),
-                    ),
+                onTap: () => context.to(BidNavigator.bids(product)),
                 child: _buildProductItem(product),
               ),
           isLoading: context.select(

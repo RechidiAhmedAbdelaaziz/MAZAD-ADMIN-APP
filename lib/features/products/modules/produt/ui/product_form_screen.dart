@@ -170,7 +170,7 @@ class ProductFormScreen extends StatelessWidget {
                                 controller:
                                     dto.suggestedPricesController,
                                 title: 'SuggestedPrices'.tr(context),
-                                maxLength: 40,
+                                maxLength: 5,
                                 validator:
                                     (value) =>
                                         value?.isEmpty ?? false

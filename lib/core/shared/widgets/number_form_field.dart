@@ -11,7 +11,7 @@ class ValuesFormField extends StatefulWidget {
   final String title;
   final int maxLength;
 
-  final String? Function(List<double>? value)? validator;
+  final String? Function(List<int>? value)? validator;
 
   const ValuesFormField({
     super.key,
@@ -29,8 +29,9 @@ class _ValuesFormFieldState extends State<ValuesFormField> {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController();
-    return FormField<List<double>>(
-      validator: widget.validator,
+    return FormField<List<int>>(
+      validator:
+          (value) => widget.validator?.call(widget.controller.value),
       builder:
           (state) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,

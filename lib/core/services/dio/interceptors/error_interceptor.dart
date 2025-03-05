@@ -9,7 +9,7 @@ class DioErrorInterceptor extends InterceptorsWrapper {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      locator<AuthCubit>().refreshToken();
+      await locator<AuthCubit>().refreshToken();
 
       return handler.resolve(
         await locator<Dio>().fetch(err.requestOptions),

@@ -1,4 +1,12 @@
 abstract class AppRoutes {
+  static const authPaths = [
+    '/login',
+    '/signup',
+    '/forget-password',
+    '/reset-password',
+    '/verify-account',
+  ];
+
   static const String home = 'HOME';
 
   //* AUTH ROUTES
@@ -24,5 +32,6 @@ abstract class AppRoutes {
   static const String productCreate = 'PRODUCT_CREATE';
   static const String productUpdate = 'PRODUCT_UPDATE';
 
-
+  //* BID ROUTES
+  static const String bids = 'BIDS';
 }

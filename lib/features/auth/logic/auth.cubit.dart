@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazad_app/core/di/locator.dart';
 import 'package:mazad_app/core/network/models/api_response.model.dart';
 import 'package:mazad_app/core/router/router.dart';
 import 'package:mazad_app/core/router/routes.dart';
-import 'package:mazad_app/core/services/dio/interceptors/dio_interceptors.dart';
 import 'package:mazad_app/core/types/cubitstate/error.state.dart';
 
 import '../data/repository/auth.repo.dart';
@@ -31,10 +29,9 @@ class AuthCubit extends Cubit<AuthState> {
   void authenticate(AuthTokens tokens) async {
     emit(state._authenticated());
     await _authCache.setTokens(tokens);
-    locator<Dio>().addAuthTokenInterceptor();
   }
 
-  void refreshToken() async {
+  Future<void> refreshToken()  async {
     emit(state._loading());
 
     final refreshToken = await _authCache.refreshToken;
@@ -46,14 +43,16 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _authRepo.refreshToken(refreshToken);
     result.when(
       success: (tokens) => authenticate(tokens),
-      error: (error) => emit(state._error(error.message)),
+      error: (error) {
+        emit(state._error(error.message));
+        logout();
+      },
     );
   }
 
   void logout() async {
     emit(state._unauthenticated());
     await _authCache.clearTokens();
-    locator<Dio>().removeAuthTokenInterceptor();
 
     locator<AppRouter>().routerConfig.goNamed(AppRoutes.login);
   }

@@ -20,6 +20,7 @@ class DioService {
 
       _dio!.addLogger();
       _dio!.addErrorInterceptor();
+      _dio!.addAuthTokenInterceptor();
 
       return _dio!;
     } else {

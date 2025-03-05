@@ -26,7 +26,7 @@ extension NavigatorExtension on BuildContext {
     result != null ? onResult(result) : onError?.call();
   }
 
-  void off(AppNavigatorBase route) => pushReplacementNamed(
+  void off(AppNavigatorBase route) => goNamed(
     route.name,
     pathParameters: route.pathParams,
     queryParameters: route.queryParams,
