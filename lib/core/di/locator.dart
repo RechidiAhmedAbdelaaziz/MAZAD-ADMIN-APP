@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mazad_app/core/localization/localization_cubit.dart';
 import 'package:mazad_app/core/router/router.dart';
 import 'package:mazad_app/features/auction/config/auction_dependency.dart';
 import 'package:mazad_app/features/auth/config/auth.dependency.dart';

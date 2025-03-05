@@ -46,16 +46,16 @@ class LoginScreen extends StatelessWidget {
                 heightSpace(57),
                 _Form(),
                 heightSpace(23),
-                Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: AppTextButton(
-                    title: 'ForgetPassword'.tr(context),
-                    onTap: () {
-                      context.to(AuthNavigator.forgetPassword());
-                    },
-                  ),
-                ),
-                heightSpace(16),
+                // Align(
+                //   alignment: AlignmentDirectional.centerEnd,
+                //   child: AppTextButton(
+                //     title: 'ForgetPassword'.tr(context),
+                //     onTap: () {
+                //       context.to(AuthNavigator.forgetPassword());
+                //     },
+                //   ),
+                // ),
+                // heightSpace(16),
                 Builder(
                   builder: (context) {
                     final isLoading = context.select(
